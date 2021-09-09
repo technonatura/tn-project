@@ -11,6 +11,7 @@
     "@mui/material": "next",
     "@mui/styles": "^5.0.0-rc.0",
     "clsx": "latest",
+    "cookie": "^0.4.1",
     "lodash": "^4.17.21",
     "next": "latest",
     "nprogress": "^0.2.0",
@@ -19,12 +20,13 @@
     "react-dom": "latest"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "next dev -p 3010",
     "build": "next build",
     "start": "next start",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "devDependencies": {
+    "@types/cookie": "^0.4.1",
     "@types/node": "latest",
     "@types/nprogress": "^0.2.0",
     "@types/react": "latest",

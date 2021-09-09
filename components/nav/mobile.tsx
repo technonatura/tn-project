@@ -12,6 +12,7 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import HomeIcon from "@mui/icons-material/Home";
 import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
+import { CssBaseline, Container } from "@mui/material/";
 
 import AddIcon from "@mui/icons-material/Add";
 
@@ -76,44 +77,58 @@ export default function LabelBottomNavigation() {
 
   return (
     <>
-      <Box
-        sx={{
-          "& > :not(style)": { m: 1 },
-          position: "fixed",
-          right: 10,
-          bottom: 60,
-        }}
-      >
-        <Fab variant="extended" size="medium" color="primary" aria-label="add">
-          <AddIcon sx={{ mr: 1 }} />
-          Post Project
-        </Fab>
-      </Box>
-
-      <Box
+      <Container
         sx={{
           position: "fixed",
-          right: 10,
+          left: 0,
+          right: 0,
           bottom: 0,
           width: "100%",
         }}
+        style={{ padding: 0 }}
       >
-        <Divider />
-        <BottomNav value={value} onChange={handleChange}>
-          <BottomNavigationAction label="Home" value="" icon={<HomeIcon />} />
-          <BottomNavigationAction
-            label="Explore"
-            value="explore"
-            icon={<ExploreIcon />}
-          />
+        <Container maxWidth="sm">
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1 },
+              position: "fixed",
+              right: 10,
+              bottom: 60,
+            }}
+          >
+            <Fab
+              variant="extended"
+              size="medium"
+              color="primary"
+              aria-label="add"
+            >
+              <AddIcon sx={{ mr: 1 }} />
+              Post Project
+            </Fab>
+          </Box>
+          <Box>
+            <Divider />
+            <BottomNav value={value} onChange={handleChange}>
+              <BottomNavigationAction
+                label="Home"
+                value=""
+                icon={<HomeIcon />}
+              />
+              <BottomNavigationAction
+                label="Explore"
+                value="explore"
+                icon={<ExploreIcon />}
+              />
 
-          <BottomNavigationAction
-            label="Account"
-            value="my"
-            icon={<AccountCircleIcon />}
-          />
-        </BottomNav>
-      </Box>
+              <BottomNavigationAction
+                label="Account"
+                value="my"
+                icon={<AccountCircleIcon />}
+              />
+            </BottomNav>
+          </Box>
+        </Container>
+      </Container>
     </>
   );
 }

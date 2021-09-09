@@ -81,73 +81,85 @@ export default function ProminentAppBar() {
           <Button onClick={handleCloseSearchDialog}>Subscribe</Button>
         </DialogActions>
       </Dialog>
+      <Container
+        sx={{
+          position: "fixed",
+          left: 0,
+          right: 0,
+          top: 0,
+          width: "100%",
+        }}
+        style={{ padding: 0 }}
+      >
+        <Container maxWidth="sm">
+          <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+              <Toolbar>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                  sx={{ mr: 2 }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ flexGrow: 1, display: { sm: "block" } }}
+                >
+                  TechnoNatura Project
+                </Typography>
 
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { sm: "block" } }}
-            >
-              TechnoNatura Project
-            </Typography>
+                <IconButton
+                  size="large"
+                  aria-label="search"
+                  color="inherit"
+                  onClick={handleClickOpenSearchDialog}
+                >
+                  <SearchIcon />
+                </IconButton>
+                <IconButton
+                  size="large"
+                  aria-label="display more actions"
+                  edge="end"
+                  color="inherit"
+                  onClick={handleClick}
+                >
+                  <MoreIcon />
+                </IconButton>
+                <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                >
+                  <NextLink href="/my">
+                    <MenuItem onClick={handleClose}>My Account</MenuItem>
+                  </NextLink>
+                  <NextLink href="/login">
+                    <MenuItem onClick={handleClose}>Login</MenuItem>
+                  </NextLink>
+                  <Divider />
+                  <NextLink href="/api/logout">
+                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  </NextLink>
 
-            <IconButton
-              size="large"
-              aria-label="search"
-              color="inherit"
-              onClick={handleClickOpenSearchDialog}
-            >
-              <SearchIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="display more actions"
-              edge="end"
-              color="inherit"
-              onClick={handleClick}
-            >
-              <MoreIcon />
-            </IconButton>
-            <Menu
-              id="fade-menu"
-              MenuListProps={{
-                "aria-labelledby": "fade-button",
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <NextLink href="/my">
-                <MenuItem onClick={handleClose}>My Account</MenuItem>
-              </NextLink>
-              <NextLink href="/login">
-                <MenuItem onClick={handleClose}>Login</MenuItem>
-              </NextLink>
-              <Divider />
-              <NextLink href="/api/logout">
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-              </NextLink>
-
-              {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleClose}>Logout</MenuItem> */}
-            </Menu>
-          </Toolbar>
-        </AppBar>
-      </Box>
+                </Menu>
+              </Toolbar>
+            </AppBar>
+          </Box>
+        </Container>
+      </Container>
       <Container>
         <Box sx={{ width: "100%", mt: 2 }}>
           <Collapse in={openLoginAlert}>

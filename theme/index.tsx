@@ -61,8 +61,10 @@ export default function ThemeConfig({
         <NProgress />
 
         {/* <MobileView> */}
-        <Container maxWidth="sm" style={{ padding: 0 }}>
+        <Container maxWidth="sm" style={{ padding: 0, paddingTop: 70 }}>
+          {/* @ts-ignore */}
           <AppBar />
+          {/* @ts-ignore */}
           {children} <MobileNav />
         </Container>
         {/* </MobileView> */}
