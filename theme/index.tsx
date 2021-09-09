@@ -7,13 +7,6 @@ import {
   createTheme,
 } from "@mui/material/styles";
 
-import {
-  MobileView,
-  BrowserView,
-  isMobile,
-  isDesktop,
-} from "react-device-detect";
-
 import MobileNav from "components/nav/mobile";
 import AppBar from "components/nav/appbar";
 import NProgress from "components/nav/nprogress";

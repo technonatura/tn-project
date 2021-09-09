@@ -4,14 +4,6 @@ import { AppProps } from "next/app";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import ThemeConfig from "../theme";
 import createEmotionCache from "../components/createEmotionCache";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import {
-  MobileView,
-  BrowserView,
-  isMobile,
-  isDesktop,
-} from "react-device-detect";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

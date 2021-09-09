@@ -1,18 +1,12 @@
 import * as React from "react";
 import { useState, useCallback, useEffect } from "react";
 
-import NProgress from "nprogress";
 import Router from "next/router";
-import NextLink from "next/link";
 
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Divider from "@mui/material/Divider";
 
-import FolderIcon from "@mui/icons-material/Folder";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExploreIcon from "@mui/icons-material/Explore";
 import HomeIcon from "@mui/icons-material/Home";
@@ -26,12 +20,10 @@ const BottomNav = styled(BottomNavigation)`
   justifyitems: stretch;
 `;
 
-let timer: NodeJS.Timeout;
-
 export default function LabelBottomNavigation() {
   const [value, setValue] = React.useState("recents");
 
-  const [state] = useState({
+  const [] = useState({
     color: "#29D",
     startPosition: 0.3,
     stopDelayMs: 200,
@@ -62,7 +54,7 @@ export default function LabelBottomNavigation() {
     //  Router.events.on("routeChangeError", routeChangeEnd);
   }, []);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
     Router.push(`/${newValue}`);
   };
