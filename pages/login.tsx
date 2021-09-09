@@ -46,7 +46,7 @@ export default function Index() {
         style={{ width: "100%", marginBottom: "20px", marginTop: "10px" }}
         variant="contained"
         color="primary"
-        href="http://localhost:3000/login?app=tn-project"
+        href="http://app.technonatura.vercel.app/login?app=tn-project"
       >
         Login with TechnoNatura Social Account
       </Button>

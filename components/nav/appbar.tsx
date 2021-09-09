@@ -88,10 +88,16 @@ export default function ProminentAppBar() {
           right: 0,
           top: 0,
           width: "100%",
+          padding: 0,
         }}
         style={{ padding: 0 }}
       >
-        <Container maxWidth="sm">
+        <Container
+          maxWidth="sm"
+          sx={{
+            padding: 0,
+          }}
+        >
           <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
               <Toolbar>

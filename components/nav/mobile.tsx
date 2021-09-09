@@ -83,11 +83,17 @@ export default function LabelBottomNavigation() {
           left: 0,
           right: 0,
           bottom: 0,
+          padding: 0,
           width: "100%",
         }}
         style={{ padding: 0 }}
       >
-        <Container maxWidth="sm">
+        <Container
+          maxWidth="sm"
+          sx={{
+            padding: 0,
+          }}
+        >
           <Box
             sx={{
               "& > :not(style)": { m: 1 },
