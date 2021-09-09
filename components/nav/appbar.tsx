@@ -10,10 +10,27 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
+import Container from "@mui/material/Container";
+
+import Alert from "@mui/material/Alert";
+import Collapse from "@mui/material/Collapse";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import CloseIcon from "@mui/icons-material/Close";
+import Link from "@mui/material/Link";
+import Drawer from "@mui/material/Drawer";
 
 import NextLink from "next/link";
 
 export default function ProminentAppBar() {
+  const [openSearchDialog, setOpenSearchDialog] = React.useState(false);
+
+  const [openLoginAlert, setopenLoginAlert] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -23,60 +40,121 @@ export default function ProminentAppBar() {
     setAnchorEl(null);
   };
 
+  const handleClickOpenSearchDialog = () => {
+    setOpenSearchDialog(true);
+  };
+
+  const handleCloseSearchDialog = () => {
+    setOpenSearchDialog(false);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { sm: "block" } }}
-          >
-            TechnoNatura Project
-          </Typography>
+    <>
+      <Dialog open={openSearchDialog} onClose={handleCloseSearchDialog}>
+        <DialogTitle>Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here.
+            We will send updates occasionally.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseSearchDialog}>Cancel</Button>
+          <Button onClick={handleCloseSearchDialog}>Subscribe</Button>
+        </DialogActions>
+      </Dialog>
 
-          <IconButton size="large" aria-label="search" color="inherit">
-            <SearchIcon />
-          </IconButton>
-          <IconButton
-            size="large"
-            aria-label="display more actions"
-            edge="end"
-            color="inherit"
-            onClick={handleClick}
-          >
-            <MoreIcon />
-          </IconButton>
-          <Menu
-            id="fade-menu"
-            MenuListProps={{
-              "aria-labelledby": "fade-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Fade}
-          >
-            <NextLink href="/login">
-              <MenuItem onClick={handleClose}>Login</MenuItem>
-            </NextLink>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { sm: "block" } }}
+            >
+              TechnoNatura Project
+            </Typography>
 
-            {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <IconButton
+              size="large"
+              aria-label="search"
+              color="inherit"
+              onClick={handleClickOpenSearchDialog}
+            >
+              <SearchIcon />
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="display more actions"
+              edge="end"
+              color="inherit"
+              onClick={handleClick}
+            >
+              <MoreIcon />
+            </IconButton>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              <NextLink href="/login">
+                <MenuItem onClick={handleClose}>Login</MenuItem>
+              </NextLink>
+
+              {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleClose}>Logout</MenuItem> */}
-          </Menu>
-        </Toolbar>
-      </AppBar>
-    </Box>
+            </Menu>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Container>
+        <Box sx={{ width: "100%", mt: 2 }}>
+          <Collapse in={openLoginAlert}>
+            <Alert
+              severity="warning"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setopenLoginAlert(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              <Link href="/login">Login</Link> to post your project.
+            </Alert>
+          </Collapse>
+        </Box>
+      </Container>
+    </>
   );
 }

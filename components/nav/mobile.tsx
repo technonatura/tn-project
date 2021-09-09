@@ -10,6 +10,11 @@ import Divider from "@mui/material/Divider";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExploreIcon from "@mui/icons-material/Explore";
 import HomeIcon from "@mui/icons-material/Home";
+import Fab from "@mui/material/Fab";
+import NavigationIcon from "@mui/icons-material/Navigation";
+import Box from "@mui/material/Box";
+
+import AddIcon from "@mui/icons-material/Add";
 
 import styled from "@emotion/styled";
 
@@ -30,7 +35,7 @@ export default function LabelBottomNavigation() {
     height: 3,
   });
   useEffect(() => {
-    if (["/", "/explore", "/account"].includes(Router.pathname)) {
+    if (["/", "/explore", "/my"].includes(Router.pathname)) {
       setValue(Router.pathname.replace("/", ""));
     }
   }, []);
@@ -61,22 +66,44 @@ export default function LabelBottomNavigation() {
 
   return (
     <>
-      <Divider light />
+      <Box
+        sx={{
+          "& > :not(style)": { m: 1 },
+          position: "fixed",
+          right: 10,
+          bottom: 60,
+        }}
+      >
+        <Fab variant="extended" size="medium" color="primary" aria-label="add">
+          <AddIcon sx={{ mr: 1 }} />
+          Post Project
+        </Fab>
+      </Box>
 
-      <BottomNav value={value} onChange={handleChange}>
-        <BottomNavigationAction label="Home" value="" icon={<HomeIcon />} />
-        <BottomNavigationAction
-          label="Explore"
-          value="explore"
-          icon={<ExploreIcon />}
-        />
+      <Box
+        sx={{
+          position: "fixed",
+          right: 10,
+          bottom: 0,
+          width: "100%",
+        }}
+      >
+        <Divider />
+        <BottomNav value={value} onChange={handleChange}>
+          <BottomNavigationAction label="Home" value="" icon={<HomeIcon />} />
+          <BottomNavigationAction
+            label="Explore"
+            value="explore"
+            icon={<ExploreIcon />}
+          />
 
-        <BottomNavigationAction
-          label="Account"
-          value="account"
-          icon={<AccountCircleIcon />}
-        />
-      </BottomNav>
+          <BottomNavigationAction
+            label="Account"
+            value="my"
+            icon={<AccountCircleIcon />}
+          />
+        </BottomNav>
+      </Box>
     </>
   );
 }
