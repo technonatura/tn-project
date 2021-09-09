@@ -15,6 +15,8 @@ import FolderIcon from "@mui/icons-material/Folder";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
+import NextLink from "next/link";
+
 const style = {
   width: "100%",
   bgcolor: "background.paper",
@@ -33,31 +35,36 @@ export default function Index() {
         </Typography>
       </Box>
       <List sx={style} component="nav" aria-label="mailbox folders">
-        <ListItem button>
-          <ListItemAvatar>
-            <Avatar>
-              <FolderIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="My Projects"
-            sx={{ marginLeft: "10px" }}
-            secondary="My projects in grade ..."
-          />
-        </ListItem>
+        <NextLink href="/my/projects">
+          <ListItem button>
+            <ListItemAvatar>
+              <Avatar>
+                <FolderIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary="My Projects"
+              sx={{ marginLeft: "10px" }}
+              secondary="My projects in grade ..."
+            />
+          </ListItem>
+        </NextLink>
         <Divider />
-        <ListItem button divider>
-          <ListItemAvatar>
-            <Avatar>
-              <ArchiveIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="My Archived Projects"
-            sx={{ marginLeft: "10px" }}
-            secondary="My archive projects."
-          />
-        </ListItem>
+        <NextLink href="/my/projects/archives">
+          <ListItem button divider>
+            <ListItemAvatar>
+              <Avatar>
+                <ArchiveIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary="My Archived Projects"
+              sx={{ marginLeft: "10px" }}
+              secondary="My archive projects."
+            />
+          </ListItem>
+        </NextLink>
+
         <ListItem button divider>
           <ListItemAvatar>
             <Avatar>

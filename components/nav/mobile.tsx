@@ -11,7 +11,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExploreIcon from "@mui/icons-material/Explore";
 import HomeIcon from "@mui/icons-material/Home";
 import Fab from "@mui/material/Fab";
-import NavigationIcon from "@mui/icons-material/Navigation";
 import Box from "@mui/material/Box";
 
 import AddIcon from "@mui/icons-material/Add";
@@ -27,6 +26,7 @@ const BottomNav = styled(BottomNavigation)`
 
 export default function LabelBottomNavigation() {
   const [value, setValue] = React.useState("recents");
+  const [show, setShow] = React.useState(false);
 
   const [] = useState({
     color: "#29D",
@@ -37,32 +37,42 @@ export default function LabelBottomNavigation() {
   useEffect(() => {
     if (["/", "/explore", "/my"].includes(Router.pathname)) {
       setValue(Router.pathname.replace("/", ""));
+      setShow(true);
+    } else {
+      setShow(false);
     }
   }, []);
 
-  const routeChangeStart = useCallback(() => {
-    //  NProgress.set(state.startPosition);
-    //  NProgress.start();
-    console.log(Router);
+  const routeChangeEnd = useCallback(() => {
+    if (["/", "/explore", "/my"].includes(Router.pathname)) {
+      if (!show) {
+        setShow(true);
+      }
+
+      if (value !== Router.pathname.replace("/", "")) {
+        setValue(Router.pathname.replace("/", ""));
+      }
+    } else {
+      if (show) {
+        setShow(false);
+      }
+    }
   }, []);
-  //  const routeChangeEnd = useCallback(() => {
-  //    clearTimeout(timer);
-  //    timer = setTimeout(() => void NProgress.done(true), state.stopDelayMs);
-  //   //  dispatch(AuthMethods.AuthRemoveErrors());
-  //  }, []);
 
   useEffect(() => {
-    //  NProgress.configure({ easing: "ease", speed: 500 });
-
-    Router.events.on("routeChangeStart", routeChangeStart);
-    //  Router.events.on("routeChangeComplete", routeChangeEnd);
-    //  Router.events.on("routeChangeError", routeChangeEnd);
+    Router.events.on("routeChangeComplete", routeChangeEnd);
   }, []);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    if (value !== newValue) {
+      setValue(newValue);
+    }
     Router.push(`/${newValue}`);
   };
+
+  if (!show) {
+    return "";
+  }
 
   return (
     <>

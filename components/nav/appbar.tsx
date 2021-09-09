@@ -27,7 +27,13 @@ import Drawer from "@mui/material/Drawer";
 
 import NextLink from "next/link";
 
+import { useRouter } from "next/router";
+import { Divider } from "@mui/material";
+
+const blackListPages = ["/login"];
+
 export default function ProminentAppBar() {
+  const router = useRouter();
   const [openSearchDialog, setOpenSearchDialog] = React.useState(false);
 
   const [openLoginAlert, setopenLoginAlert] = React.useState(true);
@@ -48,6 +54,9 @@ export default function ProminentAppBar() {
     setOpenSearchDialog(false);
   };
 
+  if (blackListPages.includes(router.pathname)) {
+    return "";
+  }
   return (
     <>
       <Dialog open={openSearchDialog} onClose={handleCloseSearchDialog}>
@@ -121,8 +130,15 @@ export default function ProminentAppBar() {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
+              <NextLink href="/my">
+                <MenuItem onClick={handleClose}>My Account</MenuItem>
+              </NextLink>
               <NextLink href="/login">
                 <MenuItem onClick={handleClose}>Login</MenuItem>
+              </NextLink>
+              <Divider />
+              <NextLink href="/api/logout">
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
               </NextLink>
 
               {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
