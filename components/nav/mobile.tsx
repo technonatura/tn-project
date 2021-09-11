@@ -25,6 +25,28 @@ const BottomNav = styled(BottomNavigation)`
   justifyitems: stretch;
 `;
 
+const navigations = [
+  {
+    urls: ["/"],
+    link: "",
+    name: "Home",
+    icon: <HomeIcon />,
+  },
+
+  {
+    urls: ["/explore", "/explore/users"],
+    link: "explore",
+    name: "Explore",
+    icon: <ExploreIcon />,
+  },
+  {
+    urls: ["/my", "/my/projects", "/my/projects/archives"],
+    link: "my",
+    name: "Account",
+    icon: <AccountCircleIcon />,
+  },
+];
+
 export default function LabelBottomNavigation() {
   const [value, setValue] = React.useState("recents");
   const [show, setShow] = React.useState(false);
@@ -36,7 +58,7 @@ export default function LabelBottomNavigation() {
     height: 3,
   });
   useEffect(() => {
-    if (["/", "/explore", "/my"].includes(Router.pathname)) {
+    if (["/", "/explore", "/my", "/explore/users"].includes(Router.pathname)) {
       setValue(Router.pathname.replace("/", ""));
       setShow(true);
     } else {
@@ -45,7 +67,7 @@ export default function LabelBottomNavigation() {
   }, []);
 
   const routeChangeEnd = useCallback(() => {
-    if (["/", "/explore", "/my"].includes(Router.pathname)) {
+    if (["/", "/explore", "/my", "/explore/users"].includes(Router.pathname)) {
       if (!show) {
         setShow(true);
       }
@@ -54,9 +76,7 @@ export default function LabelBottomNavigation() {
         setValue(Router.pathname.replace("/", ""));
       }
     } else {
-      if (show) {
-        setShow(false);
-      }
+      setShow(false);
     }
   }, []);
 
@@ -114,23 +134,15 @@ export default function LabelBottomNavigation() {
           </Box>
           <Box>
             <Divider />
-            <BottomNav value={value} onChange={handleChange}>
-              <BottomNavigationAction
-                label="Home"
-                value=""
-                icon={<HomeIcon />}
-              />
-              <BottomNavigationAction
-                label="Explore"
-                value="explore"
-                icon={<ExploreIcon />}
-              />
 
-              <BottomNavigationAction
-                label="Account"
-                value="my"
-                icon={<AccountCircleIcon />}
-              />
+            <BottomNav value={value} onChange={handleChange}>
+              {navigations.map((nav) => (
+                <BottomNavigationAction
+                  label={nav.name}
+                  value={nav.link}
+                  icon={nav.icon}
+                />
+              ))}
             </BottomNav>
           </Box>
         </Container>
