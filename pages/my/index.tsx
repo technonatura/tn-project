@@ -79,7 +79,7 @@ export default function Index() {
       </List>
 
       <Button
-        style={{ width: "100%", marginBottom: "20px", marginTop: "10px" }}
+        style={{ width: "100%", marginBottom: "100px", marginTop: "10px" }}
         variant="contained"
         color="error"
       >

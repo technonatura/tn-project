@@ -186,6 +186,7 @@ export default function ProminentAppBar() {
           top: 0,
           width: "100%",
           padding: 0,
+          zIndex: 99999,
         }}
         style={{ padding: 0 }}
       >
