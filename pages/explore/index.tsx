@@ -44,29 +44,41 @@ const Item = styled(Paper)(({ theme }) => ({
   justifyContent: "center",
 }));
 
-export default function Index() {
+export default function ExplorePage() {
+  const [tab, setTab] = React.useState<"creations" | "users">("creations");
+
   return (
     <Container maxWidth="sm">
       <Box sx={{ mt: 4, mb: 1 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Explore Your Friends Creations!
+          {tab == "users"
+            ? "Who are you looking for?"
+            : "Explore Your Friends Creations!"}
         </Typography>
         <Typography component="p" color="GrayText">
-          Explore Your Friends Creations!
+          {tab == "users"
+            ? "Looking for someone?"
+            : "Explore Your Friends Creations, and give it a like if you like it!"}
         </Typography>
       </Box>
       <Box>
         <SearchInput />
       </Box>
       <Stack direction="row" justifyItems="stretch" spacing={2} mb={4}>
-        <Button variant="contained" fullWidth>
+        <Button
+          variant={tab == "creations" ? "contained" : "outlined"}
+          fullWidth
+          onClick={() => setTab("creations")}
+        >
           Creations
         </Button>
-        <NextLink href="/explore/users">
-          <Button variant="outlined" fullWidth>
-            Users
-          </Button>
-        </NextLink>
+        <Button
+          variant={tab == "users" ? "contained" : "outlined"}
+          fullWidth
+          onClick={() => setTab("users")}
+        >
+          Users
+        </Button>
       </Stack>
       <Box sx={{ width: "100%", paddingBottom: "200px" }}>
         <Masonry

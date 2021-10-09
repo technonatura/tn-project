@@ -1,3 +1,10 @@
+import { useEffect } from "react";
+
+import { useRouter } from "next/router";
+
+import { useSelector } from "react-redux";
+import { RootStore } from "global/index";
+
 import PropTypes from "prop-types";
 // material
 import { CssBaseline, Container } from "@mui/material/";
@@ -10,6 +17,10 @@ import {
 import MobileNav from "components/nav/mobile";
 import AppBar from "components/nav/appbar";
 import NProgress from "components/nav/nprogress";
+
+import useUser from "hooks/useUser";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 //
 import shape from "./shape";
@@ -40,6 +51,10 @@ export default function ThemeConfig({
 }: {
   children: JSX.Element | JSX.Element[];
 }) {
+  const router = useRouter();
+  const { user } = useUser();
+  const authState = useSelector((state: RootStore) => state.user);
+
   // const themeOptions = useMemo(
   //   () => ({
   //     palette,
@@ -51,6 +66,20 @@ export default function ThemeConfig({
   //   }),
   //   [],
   // );
+
+  useEffect(() => {
+    console.log("hey");
+    if (
+      authState.fetched &&
+      !authState.me &&
+      !["/login", "/signin", "/register", "/signup"].includes(
+        router.pathname
+      ) &&
+      ["/account", "/my", "/"].includes(router.pathname)
+    ) {
+      router.push(`/login?to=${router.pathname}`);
+    }
+  }, [router.pathname]);
 
   theme.components = componentsOverride(theme);
   return (
@@ -64,8 +93,20 @@ export default function ThemeConfig({
         <Container maxWidth="sm" style={{ padding: 0, paddingTop: 70 }}>
           {/* @ts-ignore */}
           <AppBar />
+          {["/account", "/my", "/"].includes(router.pathname) &&
+          !authState.me ? (
+            <Box
+              sx={{ display: "flex", justifyContent: "center" }}
+              width="100%"
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            children
+          )}
+
           {/* @ts-ignore */}
-          {children} <MobileNav />
+          <MobileNav />
         </Container>
         {/* </MobileView> */}
       </ThemeProvider>
