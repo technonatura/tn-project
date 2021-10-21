@@ -1,4 +1,8 @@
 import * as React from "react";
+
+import { useSelector } from "react-redux";
+import { RootStore } from "global/index";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,12 +19,7 @@ import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import Collapse from "@mui/material/Collapse";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import Paper from "@mui/material/Paper";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "@mui/material/Link";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
@@ -30,24 +29,79 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import theme from "theme/theme";
 
 import Stack from "@mui/material/Stack";
 
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Tooltip from "@mui/material/Tooltip";
-
 import NextLink from "next/link";
 
 import { useRouter } from "next/router";
 import { Divider } from "@mui/material";
 
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import Slide from "@mui/material/Slide";
+
 import Langs from "./languageChanger";
+
+const Search = styled("div")(({ theme }) => ({
+  display: "flex",
+
+  borderRadius: theme.shape.borderRadius,
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.35),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+  color: "white",
+  marginTop: 10,
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "white",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "white",
+  width: "100%",
+
+  "& .MuiInputBase-input": {
+    color: "white",
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "100%",
+      "&:focus": {
+        width: "100%",
+      },
+    },
+  },
+}));
 
 const blackListPages = ["/login"];
 
 export default function ProminentAppBar() {
+  const containerRef = React.useRef(null);
+
   const router = useRouter();
+  const authState = useSelector((state: RootStore) => state.user);
   const [openSearchDialog, setOpenSearchDialog] = React.useState(false);
   const [openSidebar, setOpenSidebar] = React.useState(false);
 
@@ -156,28 +210,7 @@ export default function ProminentAppBar() {
       >
         {sidebar()}
       </SwipeableDrawer>
-      <Dialog open={openSearchDialog} onClose={handleCloseSearchDialog}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseSearchDialog}>Cancel</Button>
-          <Button onClick={handleCloseSearchDialog}>Subscribe</Button>
-        </DialogActions>
-      </Dialog>
+
       <Container
         sx={{
           position: "fixed",
@@ -196,7 +229,92 @@ export default function ProminentAppBar() {
             padding: 0,
           }}
         >
-          <Box sx={{ flexGrow: 1 }}>
+          <Box sx={{ flexGrow: 1 }} ref={containerRef}>
+            <Slide
+              direction="down"
+              in={openSearchDialog}
+              container={containerRef.current}
+            >
+              <Container
+                sx={{
+                  position: "absolute",
+                  width: "100%",
+                  right: 0,
+                  left: 0,
+                  height: "auto",
+                  zIndex: 999,
+                }}
+                maxWidth="sm"
+              >
+                <AppBar position="static">
+                  <Toolbar
+                    sx={{ display: "initial", justifyContent: "center" }}
+                  >
+                    {/* <Search>
+                      <SearchIconWrapper>
+                        <SearchIcon />
+                      </SearchIconWrapper>
+
+                      <StyledInputBase
+                        placeholder="Search…"
+                        inputProps={{ "aria-label": "search" }}
+                      />
+                    </Search> */}
+                    <Paper
+                      component={Search}
+                      sx={{
+                        backgroundColor: alpha(theme.palette.common.white, 0.3),
+                        "::placeholder": {
+                          color: "white",
+                          opacity: 1,
+                        },
+                      }}
+                    >
+                      <InputBase
+                        sx={{
+                          ml: 1,
+                          flex: 1,
+                          color: "white",
+                          "::placeholder": {
+                            color: "white",
+                            opacity: 1,
+                          },
+                        }}
+                        placeholder="Search Google Maps"
+                        inputProps={{ "aria-label": "search google maps" }}
+                      />
+                      <IconButton
+                        type="submit"
+                        sx={{ p: "10px", color: "white" }}
+                        aria-label="search"
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                      <Divider
+                        sx={{
+                          height: 30,
+                          m: 0.5,
+                          backgroundColor: alpha(
+                            theme.palette.common.white,
+                            0.5
+                          ),
+                        }}
+                        orientation="vertical"
+                      />
+                      <IconButton
+                        color="primary"
+                        sx={{ p: "10px", color: "white" }}
+                        aria-label="directions"
+                        onClick={handleCloseSearchDialog}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </Paper>
+                  </Toolbar>
+                </AppBar>
+              </Container>
+            </Slide>
+
             <AppBar position="static">
               <Toolbar>
                 <IconButton
@@ -265,29 +383,32 @@ export default function ProminentAppBar() {
           </Box>
         </Container>
       </Container>
-      <Container>
-        <Box sx={{ width: "100%", mt: 2 }}>
-          <Collapse in={openLoginAlert}>
-            <Alert
-              severity="warning"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setopenLoginAlert(false);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
-            >
-              <Link href="/login">Login</Link> to post your project.
-            </Alert>
-          </Collapse>
-        </Box>
-      </Container>
+
+      {!authState.me && authState.fetched && (
+        <Container>
+          <Box sx={{ width: "100%", mt: 2 }}>
+            <Collapse in={openLoginAlert}>
+              <Alert
+                severity="warning"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setopenLoginAlert(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                <Link href="/login">Login</Link> to post your project.
+              </Alert>
+            </Collapse>
+          </Box>
+        </Container>
+      )}
     </>
   );
 }

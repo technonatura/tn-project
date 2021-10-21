@@ -10,9 +10,10 @@ import Divider from "@mui/material/Divider";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExploreIcon from "@mui/icons-material/Explore";
 import HomeIcon from "@mui/icons-material/Home";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
-import { CssBaseline, Container } from "@mui/material/";
+import { Container } from "@mui/material/";
 
 import AddIcon from "@mui/icons-material/Add";
 
@@ -38,6 +39,12 @@ const navigations = [
     link: "explore",
     name: "Explore",
     icon: <ExploreIcon />,
+  },
+  {
+    urls: ["/notifications"],
+    link: "notifications",
+    name: "Notifications",
+    icon: <NotificationsIcon />,
   },
   {
     urls: ["/my", "/my/projects", "/my/projects/archives"],

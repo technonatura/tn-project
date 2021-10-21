@@ -17,23 +17,32 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import NextLink from "next/link";
 
+import { useSelector } from "react-redux";
+import { RootStore } from "global/index";
+import { Stack } from "@mui/material";
+
 const style = {
   width: "100%",
   bgcolor: "background.paper",
 };
 
-export default function Index() {
+export default function Account() {
+  const authState = useSelector((state: RootStore) => state.user);
+
   return (
     <Container maxWidth="sm">
-      <Box sx={{ mt: 4, mb: 2 }}>
+      <Stack sx={{ mt: 4, mb: 2 }} direction="row" justifyItems="stretch">
+        <Avatar>
+          <FolderIcon />
+        </Avatar>
         <Typography variant="h4" component="h1" gutterBottom>
-          Hello Aldhaneka!
+          Hello {authState.me?.fullName}
         </Typography>
         <Typography component="p" gutterBottom color="gray">
           Welcome to Account Page, you can customise your TechnoNatura Project
           Page
         </Typography>
-      </Box>
+      </Stack>
       <List sx={style} component="nav" aria-label="mailbox folders">
         <NextLink href="/my/projects">
           <ListItem button>
@@ -45,7 +54,8 @@ export default function Index() {
             <ListItemText
               primary="My Projects"
               sx={{ marginLeft: "10px" }}
-              secondary="My projects in grade ..."
+              // @ts-ignore
+              secondary={`My projects in grade ${authState.me?.roleInTechnoNatura.grade}`}
             />
           </ListItem>
         </NextLink>

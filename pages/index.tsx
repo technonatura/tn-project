@@ -6,10 +6,6 @@ import Box from "@mui/material/Box";
 
 import MainCard from "components/Cards/main";
 
-import ProTip from "../components/ProTip";
-import Link from "../components/Link";
-import Copyright from "../components/Copyright";
-
 export default function Index() {
   return (
     <Container maxWidth="sm">

@@ -93,6 +93,7 @@ export default function ThemeConfig({
         <Container maxWidth="sm" style={{ padding: 0, paddingTop: 70 }}>
           {/* @ts-ignore */}
           <AppBar />
+
           {["/account", "/my", "/"].includes(router.pathname) &&
           !authState.me ? (
             <Box
