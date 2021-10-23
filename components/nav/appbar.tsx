@@ -49,7 +49,8 @@ import Langs from "./languageChanger";
 
 const Search = styled("div")(({ theme }) => ({
   display: "flex",
-
+  alignItems: "center",
+  justifyContent: "center",
   borderRadius: theme.shape.borderRadius,
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.35),
@@ -61,7 +62,6 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
   color: "white",
-  marginTop: 10,
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -248,18 +248,12 @@ export default function ProminentAppBar() {
               >
                 <AppBar position="static">
                   <Toolbar
-                    sx={{ display: "initial", justifyContent: "center" }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
                   >
-                    {/* <Search>
-                      <SearchIconWrapper>
-                        <SearchIcon />
-                      </SearchIconWrapper>
-
-                      <StyledInputBase
-                        placeholder="Search…"
-                        inputProps={{ "aria-label": "search" }}
-                      />
-                    </Search> */}
                     <Paper
                       component={Search}
                       sx={{
@@ -268,6 +262,7 @@ export default function ProminentAppBar() {
                           color: "white",
                           opacity: 1,
                         },
+                        width: "100% !important",
                       }}
                     >
                       <InputBase

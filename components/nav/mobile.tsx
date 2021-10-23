@@ -121,24 +121,6 @@ export default function LabelBottomNavigation() {
             padding: 0,
           }}
         >
-          <Box
-            sx={{
-              "& > :not(style)": { m: 1 },
-              position: "fixed",
-              right: 10,
-              bottom: 60,
-            }}
-          >
-            <Fab
-              variant="extended"
-              size="medium"
-              color="primary"
-              aria-label="add"
-            >
-              <AddIcon sx={{ mr: 1 }} />
-              Post Project
-            </Fab>
-          </Box>
           <Box>
             <Divider />
 

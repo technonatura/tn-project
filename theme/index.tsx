@@ -22,6 +22,10 @@ import useUser from "hooks/useUser";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
+import NotifCard from "components/NotifCard";
+import Footer from "components/nav/footer";
+import PostProjectButton from "components/nav/PostProjectButton";
+
 //
 import shape from "./shape";
 import palette from "./palette";
@@ -94,6 +98,8 @@ export default function ThemeConfig({
           {/* @ts-ignore */}
           <AppBar />
 
+          <NotifCard />
+
           {["/account", "/my", "/"].includes(router.pathname) &&
           !authState.me ? (
             <Box
@@ -105,9 +111,10 @@ export default function ThemeConfig({
           ) : (
             children
           )}
-
           {/* @ts-ignore */}
           <MobileNav />
+          <Footer />
+          <PostProjectButton />
         </Container>
         {/* </MobileView> */}
       </ThemeProvider>

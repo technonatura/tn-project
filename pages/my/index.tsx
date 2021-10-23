@@ -21,6 +21,8 @@ import { useSelector } from "react-redux";
 import { RootStore } from "global/index";
 import { Stack } from "@mui/material";
 
+import stringAvatar from "utils/stringAvatar";
+
 const style = {
   width: "100%",
   bgcolor: "background.paper",
@@ -32,17 +34,23 @@ export default function Account() {
   return (
     <Container maxWidth="sm">
       <Stack sx={{ mt: 4, mb: 2 }} direction="row" justifyItems="stretch">
-        <Avatar>
-          <FolderIcon />
-        </Avatar>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Hello {authState.me?.fullName}
-        </Typography>
-        <Typography component="p" gutterBottom color="gray">
-          Welcome to Account Page, you can customise your TechnoNatura Project
-          Page
-        </Typography>
+        <Avatar
+          sx={{ width: 70, height: 70, marginRight: 2 }}
+          src={authState.me?.avatar}
+          // @ts-ignore
+          alt={authState.me.username}
+        ></Avatar>
+        <Stack direction="column" justifyItems="stretch">
+          <Typography variant="h3" component="h1" gutterBottom>
+            {authState.me?.fullName}
+          </Typography>
+          {/* @ts-ignore */}
+          <Typography variant="p" component="p" gutterBottom>
+            @{authState.me?.username}
+          </Typography>
+        </Stack>
       </Stack>
+
       <List sx={style} component="nav" aria-label="mailbox folders">
         <NextLink href="/my/projects">
           <ListItem button>
@@ -82,7 +90,7 @@ export default function Account() {
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary="TechnoNatura Dashboard"
+            primary="go to TechnoNatura Dashboard"
             sx={{ marginLeft: "10px" }}
           />
         </ListItem>
