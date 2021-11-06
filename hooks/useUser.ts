@@ -26,7 +26,7 @@ const checkTokenRes = (authToken: string) => async () =>
           | { status: "warning" | "error"; message: string }
           | { status: "success"; user: UserInterface; message: "string" };
       }
-    >(`/api/user`, {
+    >(`${process.env.NEXT_PUBLIC_SERVER}/auth/checkJWT`, {
       token: authToken,
     })
   ).data;
@@ -92,6 +92,7 @@ export default function useUser() {
     }
 
     if (user.status === "success") {
+      register(user.user._id, user.user.roleInTechnoNatura);
       dispatch(
         UserCheckTokenSuccess(
           user.user,
@@ -104,6 +105,20 @@ export default function useUser() {
       dispatch(UserAuthFail(user.message));
     }
   }, [user]);
+
+  async function register(user_id: string, roleInTechnoNatura: any) {
+    await axios.post<
+      { userId: string; roleInTechnoNatura: any },
+      {
+        data:
+          | { status: "warning" | "error"; message: string }
+          | { status: "success"; user: UserInterface; message: "string" };
+      }
+    >(`/api/register`, {
+      userId: user_id,
+      roleInTechnoNatura,
+    });
+  }
 
   return { user, mutateUser, isLoading: true };
 }

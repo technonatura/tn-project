@@ -44,7 +44,8 @@ const handler = async (req: NextApiRequestWithFoo, res: NextApiResponse) => {
     return;
   }
 
-  res.send({});
+  res.send("hello!");
+  return;
 };
 
 export default handler;
