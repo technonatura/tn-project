@@ -1,7 +1,6 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
@@ -15,13 +14,11 @@ import FolderIcon from "@mui/icons-material/Folder";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
-import NextLink from "next/link";
-
 import { useSelector } from "react-redux";
 import { RootStore } from "global/index";
 import { Stack } from "@mui/material";
 
-import stringAvatar from "utils/stringAvatar";
+import Link from "components/Link";
 
 const style = {
   width: "100%",
@@ -52,7 +49,10 @@ export default function Account() {
       </Stack>
 
       <List sx={style} component="nav" aria-label="mailbox folders">
-        <NextLink href="/my/projects">
+        <Link
+          target="_blank"
+          href="https://app.technonatura.vercel.app/project"
+        >
           <ListItem button>
             <ListItemAvatar>
               <Avatar>
@@ -66,9 +66,12 @@ export default function Account() {
               secondary={`My projects in grade ${authState.me?.roleInTechnoNatura.grade}`}
             />
           </ListItem>
-        </NextLink>
+        </Link>
         <Divider />
-        <NextLink href="/my/projects/archives">
+        <Link
+          target="_blank"
+          href="https://app.technonatura.vercel.app/project"
+        >
           <ListItem button divider>
             <ListItemAvatar>
               <Avatar>
@@ -81,19 +84,21 @@ export default function Account() {
               secondary="My archive projects."
             />
           </ListItem>
-        </NextLink>
+        </Link>
 
-        <ListItem button divider>
-          <ListItemAvatar>
-            <Avatar>
-              <DashboardIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="go to TechnoNatura Dashboard"
-            sx={{ marginLeft: "10px" }}
-          />
-        </ListItem>
+        <Link target="_blank" href="https://app.technonatura.vercel.app/">
+          <ListItem button divider>
+            <ListItemAvatar>
+              <Avatar>
+                <DashboardIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary="go to TechnoNatura Dashboard"
+              sx={{ marginLeft: "10px" }}
+            />
+          </ListItem>
+        </Link>
       </List>
 
       <Button

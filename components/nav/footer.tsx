@@ -2,27 +2,11 @@ import * as React from "react";
 
 import { useRouter } from "next/router";
 
-import BottomNavigation from "@mui/material/BottomNavigation";
+import { Container, Typography, Divider, Link } from "@mui/material/";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ExploreIcon from "@mui/icons-material/Explore";
-import HomeIcon from "@mui/icons-material/Home";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import {
-  Container,
-  Typography,
-  Divider,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Link,
-} from "@mui/material/";
-
-import theme from "theme/theme";
 export default function LabelBottomNavigation() {
   const router = useRouter();
 
-  console.log(router);
   if (["/profile/[username]"].includes(router.pathname)) {
     return (
       <Container

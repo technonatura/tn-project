@@ -72,7 +72,6 @@ export default function ThemeConfig({
   // );
 
   useEffect(() => {
-    console.log("hey");
     if (
       authState.fetched &&
       !authState.me &&
@@ -82,6 +81,12 @@ export default function ThemeConfig({
       ["/account", "/my", "/"].includes(router.pathname)
     ) {
       router.push(`/login?to=${router.pathname}`);
+    } else if (
+      authState.fetched &&
+      authState.me &&
+      ["/login", "/signin", "/register", "/signup"].includes(router.pathname)
+    ) {
+      router.push(`/`);
     }
   }, [router.pathname]);
 

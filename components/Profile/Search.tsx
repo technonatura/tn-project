@@ -5,14 +5,13 @@ import Box from "@mui/material/Box";
 
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import Tooltip from "@mui/material/Tooltip";
 import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
 // material
-import { Popover } from "@mui/material";
+import { Popover, IconButton } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
@@ -94,7 +93,7 @@ export default function SearchInput() {
           alignItems: "center",
           width: "100%",
           mb: 3,
-          mt: 5,
+          mt: 3,
         }}
         elevation={2}
       >

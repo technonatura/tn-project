@@ -26,7 +26,7 @@ const checkTokenRes = (authToken: string) => async () =>
           | { status: "warning" | "error"; message: string }
           | { status: "success"; user: UserInterface; message: "string" };
       }
-    >(`${process.env.NEXT_PUBLIC_SERVER}/auth/checkJWT`, {
+    >(`/api/user`, {
       token: authToken,
     })
   ).data;
@@ -57,7 +57,7 @@ export default function useUser() {
       }
   >(
     // @ts-ignore
-    `/api/user?pass=${process.env.NEXT_PUBLIC_COOKIE_PASSWORD}`,
+    `/api/user?token=${process.env.NEXT_PUBLIC_COOKIE_PASSWORD}`,
     checkTokenRes(
       authCookie[process.env.NEXT_PUBLIC_AUTH_TOKEN_COOKIE_NAME || "authCookie"]
     )
