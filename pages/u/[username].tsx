@@ -239,7 +239,7 @@ export const getServerSideProps: GetServerSideProps<
   const user = await getUser(context.query.username);
   // console.log(user);
 
-  if (!user.user) {
+  if (!user.user || !user.userProject) {
     return {
       notFound: true,
     };
