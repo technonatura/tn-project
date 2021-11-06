@@ -25,19 +25,16 @@ export const setCookie = (
 };
 
 const handler = (req: NextApiRequestWithFoo, res: NextApiResponse) => {
-  console.log(req.method, req.body.token);
-
   res.setHeader(
     "Set-Cookie",
-    serialize("authToken", req.body.token, {
+    serialize("authCookie", "", {
       maxAge: 1000 * 60 * 60 * 24 * 365 * 2,
       secure: process.env.NODE_ENV !== "development",
-      httpOnly: true,
       path: "/",
     })
   );
 
-  res.redirect("/");
+  window.history.back();
 };
 
 export default handler;

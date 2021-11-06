@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 
 /* eslint-disable no-unused-vars */
 import { UserInterface } from "types/models/User.model";
+import { UserProjectInterface } from "models/userProject";
 
 // eslint-disable-next-line no-shadow
 export enum AUTH_ACTIONS {
@@ -42,6 +43,7 @@ export interface AuthSuccess {
   type: AUTH_ACTIONS.AUTH_LOGIN_SUCCESS | AUTH_ACTIONS.AUTH_SIGNUP_SUCCESS;
   token: string;
   user: UserInterface;
+  self: UserProjectInterface;
 }
 
 export type AuthDispatchTypes =
@@ -74,12 +76,13 @@ export const UserLogout =
   };
 
 export const UserSignUpLoginSuccess =
-  (user: UserInterface, token: string) =>
+  (user: UserInterface, token: string, self: UserProjectInterface) =>
   async (dispatch: Dispatch<AuthDispatchTypes>) => {
     dispatch<AuthSuccess>({
       type: AUTH_ACTIONS.AUTH_SIGNUP_SUCCESS,
       token,
       user,
+      self,
     });
   };
 
@@ -92,11 +95,12 @@ export const UserAuthFail =
   };
 
 export const UserCheckTokenSuccess =
-  (user: UserInterface, token: string) =>
+  (user: UserInterface, token: string, self: UserProjectInterface) =>
   async (dispatch: Dispatch<AuthDispatchTypes>) => {
     dispatch<AuthSuccess>({
       type: AUTH_ACTIONS.AUTH_LOGIN_SUCCESS,
       token,
       user,
+      self,
     });
   };

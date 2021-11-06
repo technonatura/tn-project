@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { UserCheckTokenSuccess, UserAuthFail } from "global/actions/auth";
 
 import { UserInterface } from "types/models/User.model";
+import { UserProjectInterface } from "models/userProject";
 
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 //   .eyJwYXNzd29yZCI6IiQyYiQxMCRILk9yQ1lXbGZZeGE2Rk5PSkoyQ251bzBLSEZZRVVNN0hlMDlEbVdZci9KN0picnNWNm5PSyIsIl9pZCI6IjYxMGU3NDUwMjE3ZWEzOGNmMTY2ODhmNCIsImlhdCI6MTYyODMzNzIzMiwiZXhwIjoxNjU5ODk0ODMyfQ
@@ -92,32 +93,34 @@ export default function useUser() {
     }
 
     if (user.status === "success") {
-      register(user.user._id, user.user.roleInTechnoNatura);
-      dispatch(
-        UserCheckTokenSuccess(
-          user.user,
-          authCookie[
-            process.env.NEXT_PUBLIC_AUTH_TOKEN_COOKIE_NAME || "authCookie"
-          ]
-        )
-      );
+      register();
     } else {
       dispatch(UserAuthFail(user.message));
     }
   }, [user]);
 
-  async function register(user_id: string, roleInTechnoNatura: any) {
-    await axios.post<
-      { userId: string; roleInTechnoNatura: any },
-      {
-        data:
-          | { status: "warning" | "error"; message: string }
-          | { status: "success"; user: UserInterface; message: "string" };
-      }
-    >(`/api/register`, {
-      userId: user_id,
-      roleInTechnoNatura,
-    });
+  async function register() {
+    if (user && user.status == "success") {
+      const self = await axios.post<
+        { userId: string; roleInTechnoNatura: any },
+        {
+          data: UserProjectInterface;
+        }
+      >(`/api/register`, {
+        userId: user.user._id,
+        roleInTechnoNatura: user.user.roleInTechnoNatura,
+      });
+
+      dispatch(
+        UserCheckTokenSuccess(
+          user.user,
+          authCookie[
+            process.env.NEXT_PUBLIC_AUTH_TOKEN_COOKIE_NAME || "authCookie"
+          ],
+          self.data
+        )
+      );
+    }
   }
 
   return { user, mutateUser, isLoading: true };

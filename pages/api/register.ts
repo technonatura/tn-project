@@ -18,7 +18,11 @@ const handler = async (req: NextApiRequestWithFoo, res: NextApiResponse) => {
       if (!isThere && req.body.roleInTechnoNatura.student) {
         const user = new UserProjectModel({ userId: req.body.userId });
         await user.save();
+        res.send(user);
+        return;
       }
+      res.send(isThere);
+      return;
     }
     res.send("success!");
     return;

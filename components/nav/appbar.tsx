@@ -361,13 +361,18 @@ export default function ProminentAppBar() {
                   <NextLink href="/my">
                     <MenuItem onClick={handleClose}>My Account</MenuItem>
                   </NextLink>
-                  <NextLink href="/login">
-                    <MenuItem onClick={handleClose}>Login</MenuItem>
-                  </NextLink>
-                  <Divider />
-                  <NextLink href="/api/logout">
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                  </NextLink>
+                  {authState.me ? (
+                    <>
+                      <Divider />
+                      <NextLink href="/api/logout">
+                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                      </NextLink>
+                    </>
+                  ) : (
+                    <NextLink href="/login">
+                      <MenuItem onClick={handleClose}>Login</MenuItem>
+                    </NextLink>
+                  )}
 
                   {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>

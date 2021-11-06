@@ -6,16 +6,17 @@ export type userProjectNotification = {
   userId: string;
 } & notificationType;
 
-export interface UserInterface {
+export interface UserProjectInterface {
   userId: string;
   likes: Array<string>;
   follows: Array<string>;
   notifications: Array<userProjectNotification>;
   bio: string;
   banner: string;
+  projects: number;
 }
 
-export interface UserBaseDocument extends UserInterface, Document {
+export interface UserBaseDocument extends UserProjectInterface, Document {
   likes: Array<string>;
   follows: Array<string>;
   notifications: Array<userProjectNotification>;
@@ -36,6 +37,7 @@ const UserSchema = new Schema<UserDocument, UserModel>({
 
   likes: [String],
   follows: [String],
+
   notifications: [
     {
       userId: String,
@@ -45,6 +47,10 @@ const UserSchema = new Schema<UserDocument, UserModel>({
   ],
   banner: String,
   bio: String,
+  projects: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export default models.UserProject ||

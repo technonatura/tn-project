@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import * as React from "react";
 import { useCookies } from "react-cookie";
 import toast from "react-hot-toast";
@@ -35,6 +37,7 @@ import ms from "ms";
 
 import UserLoginFunc from "utils/userLogin";
 import { UserSignUpLoginSuccess } from "global/actions/auth";
+import { UserProjectInterface } from "models/userProject";
 
 export default function Index() {
   const [error, setError] = React.useState<string>("");
@@ -74,7 +77,18 @@ export default function Index() {
       }
 
       if (userLogin.status === "success") {
-        dispatch(UserSignUpLoginSuccess(userLogin.user, userLogin.token));
+        const self = await axios.post<
+          { userId: string; roleInTechnoNatura: any },
+          {
+            data: UserProjectInterface;
+          }
+        >(`/api/register`, {
+          userId: userLogin.user._id,
+          roleInTechnoNatura: userLogin.user.roleInTechnoNatura,
+        });
+        dispatch(
+          UserSignUpLoginSuccess(userLogin.user, userLogin.token, self.data)
+        );
         toast.success("Login Success!");
         if (formik.values.remember) {
           setAuthCookie(

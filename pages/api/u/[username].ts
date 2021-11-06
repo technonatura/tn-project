@@ -20,10 +20,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         });
         return;
       }
+      const followers = await UserProjectModel.find({
+        follows: userProject.userId,
+      });
+
+      // console.log("user");
       res.send({
         message: "User project found!",
         status: "success",
-        userProject: userProject,
+        userProject: { ...userProject._doc, followers },
         user: user,
       });
       return;
