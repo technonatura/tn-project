@@ -6,9 +6,9 @@ import User, { UserInterface } from "models/User/User.model";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method == "GET") {
     await dbConncect();
-    const user = await User.findOne({ username: req.query.username }).select(
-      "-password"
-    );
+    const user = await User.findOne({ username: req.query.username })
+      .select("-password")
+      .select("-email");
     if (user) {
       const userProject = await UserProjectModel.findOne({ userId: user._id });
 

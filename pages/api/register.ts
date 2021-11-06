@@ -15,13 +15,7 @@ const handler = async (req: NextApiRequestWithFoo, res: NextApiResponse) => {
       const isThere = await UserProjectModel.findOne({
         userId: req.body.userId,
       });
-      if (
-        !isThere &&
-        // @ts-ignore
-        !req.body.roleInTechnoNatura.teacher &&
-        // @ts-ignore
-        !req.body.roleInTechnoNatura.staff
-      ) {
+      if (!isThere && req.body.roleInTechnoNatura.student) {
         const user = new UserProjectModel({ userId: req.body.userId });
         await user.save();
       }
