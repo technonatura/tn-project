@@ -1,3 +1,4 @@
+import * as React from "react";
 import { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
 
@@ -9,7 +10,6 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
 
 import { useSelector } from "react-redux";
 import { RootStore } from "global/index";
@@ -22,71 +22,96 @@ import SearchBar from "components/Profile/Search";
 
 import { UserProjectInterface } from "models/userProject";
 import { UserInterface } from "models/User/index";
+import ModalLogin from "components/modalLogin";
 
 function UserInformationData({
   followers,
   follows,
   projects,
+  loggedIn,
 }: {
   followers: number;
   follows: number;
   projects: number;
+  loggedIn: boolean;
 }) {
+  const [OpenModalLogin, setOpenModalLogin] = React.useState(false);
+
+  const handleClickOpenModalLogin = () => {
+    setOpenModalLogin(true);
+  };
+
+  const handleClose = () => {
+    setOpenModalLogin(false);
+  };
   return (
-    <Stack sx={{ width: "100%" }} direction="row" justifyItems="stretch">
-      <Typography
-        sx={{
-          ":hover": {
-            color: "#454F5B",
-            cursor: "pointer",
-          },
-          ":active": {
-            color: "#637381",
-            cursor: "pointer",
-          },
-        }}
-        component="p"
-        gutterBottom
-      >
-        <b>{followers}</b> Followers
-      </Typography>
-      <Divider sx={{ ml: 1, mr: 1 }} orientation="vertical" flexItem />
+    <>
+      <ModalLogin open={OpenModalLogin} handleClose={handleClose} />
+      <Stack sx={{ width: "100%" }} direction="row" justifyItems="stretch">
+        <Typography
+          sx={{
+            ":hover": {
+              color: "#454F5B",
+              cursor: "pointer",
+            },
+            ":active": {
+              color: "#637381",
+              cursor: "pointer",
+            },
+          }}
+          component="p"
+          gutterBottom
+          onClick={() => {
+            if (!loggedIn) {
+              handleClickOpenModalLogin();
+            }
+          }}
+        >
+          <b>{followers}</b> Followers
+        </Typography>
+        <Divider sx={{ ml: 1, mr: 1 }} orientation="vertical" flexItem />
 
-      <Typography
-        sx={{
-          ":hover": {
-            color: "#454F5B",
-            cursor: "pointer",
-          },
-          ":active": {
-            color: "#637381",
-            cursor: "pointer",
-          },
-        }}
-        component="p"
-        gutterBottom
-      >
-        <b>{projects}</b> Projects
-      </Typography>
-      <Divider sx={{ ml: 1, mr: 1 }} orientation="vertical" flexItem />
+        <Typography
+          sx={{
+            ":hover": {
+              color: "#454F5B",
+              cursor: "pointer",
+            },
+            ":active": {
+              color: "#637381",
+              cursor: "pointer",
+            },
+          }}
+          component="p"
+          gutterBottom
+        >
+          <b>{projects}</b> Projects
+        </Typography>
+        <Divider sx={{ ml: 1, mr: 1 }} orientation="vertical" flexItem />
 
-      <Typography
-        sx={{
-          ":hover": {
-            color: "#454F5B",
-            cursor: "pointer",
-          },
-          ":active": {
-            color: "#637381",
-            cursor: "pointer",
-          },
-        }}
-        component="p"
-        gutterBottom
-      >
-        <b>{follows}</b> Follows
-      </Typography>
-    </Stack>
+        <Typography
+          sx={{
+            ":hover": {
+              color: "#454F5B",
+              cursor: "pointer",
+            },
+            ":active": {
+              color: "#637381",
+              cursor: "pointer",
+            },
+          }}
+          component="p"
+          gutterBottom
+          onClick={() => {
+            if (!loggedIn) {
+              handleClickOpenModalLogin();
+            }
+          }}
+        >
+          <b>{follows}</b> Follows
+        </Typography>
+      </Stack>
+    </>
   );
 }
 
@@ -103,7 +128,6 @@ export default function ProfilePage({
 }) {
   const authState = useSelector((state: RootStore) => state.user);
   const windowWidth = useWindowWidth();
-  console.log(authState);
   return (
     <>
       <NextSeo
@@ -166,6 +190,7 @@ export default function ProfilePage({
 
             {windowWidth >= 466 && (
               <UserInformationData
+                loggedIn={authState.me ? true : false}
                 followers={userProject.followers.length}
                 follows={userProject.follows.length}
                 projects={userProject.projects}
@@ -187,7 +212,12 @@ export default function ProfilePage({
         </Typography>
         <Container sx={{ display: "flex", justifyContent: "center" }}>
           {windowWidth < 466 && (
-            <UserInformationData followers={100} follows={10} projects={1} />
+            <UserInformationData
+              loggedIn={authState.me ? true : false}
+              followers={100}
+              follows={10}
+              projects={1}
+            />
           )}
         </Container>
         {authState.me && authState.me._id != userProject.userId && (
@@ -220,7 +250,7 @@ export default function ProfilePage({
           </Stack>
         )} */}
 
-        <SearchBar />
+        <SearchBar username={username} />
       </Container>
     </>
   );

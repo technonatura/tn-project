@@ -1,7 +1,4 @@
 import * as React from "react";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
@@ -13,6 +10,7 @@ import PropTypes from "prop-types";
 // material
 import { Popover, IconButton } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
+import SearchFilter from "./SearchFilter";
 
 // ----------------------------------------------------------------------
 
@@ -51,14 +49,13 @@ function MenuPopover({ children, sx, ...other }) {
       PaperProps={{
         sx: {
           mt: 1.5,
-          p: "1px 10px",
+          p: "10px 10px",
           overflow: "inherit",
           //   @ts-ignore
           boxShadow: (theme) => theme.customShadows.z20,
           border: (theme) => `solid 1px ${theme.palette.grey[200]}`,
           ...sx,
-          maxWidth: "200px",
-          minWidth: "290px",
+          width: `${other.anchorEl.clientWidth}px`,
         },
       }}
       {...other}
@@ -70,9 +67,9 @@ function MenuPopover({ children, sx, ...other }) {
   );
 }
 
-export default function SearchInput() {
+export default function SearchInput(props: { username: string }) {
   const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
+  const anchorRef = React.useRef<HTMLFormElement>(null);
 
   const handleOpen = () => {
     setOpen(true);
@@ -82,6 +79,7 @@ export default function SearchInput() {
     setOpen(false);
   };
 
+  console.log(Object(anchorRef.current));
   return (
     <>
       <Paper
@@ -104,7 +102,7 @@ export default function SearchInput() {
         </Tooltip>
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search {username} Project"
+          placeholder={`Search ${props.username}'s Project`}
           inputProps={{ "aria-label": "search {username} project" }}
         />
         <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
@@ -112,17 +110,12 @@ export default function SearchInput() {
         </IconButton>
       </Paper>
       {/* @ts-ignore */}
-      <MenuPopover
+
+      <SearchFilter
         anchorEl={anchorRef.current}
         open={open}
         onClose={handleClose}
-      >
-        <Box sx={{ py: 1 }}>
-          <Typography style={{ fontWeight: 600 }} color="gray">
-            Search Filter
-          </Typography>
-        </Box>
-      </MenuPopover>
+      />
     </>
   );
 }

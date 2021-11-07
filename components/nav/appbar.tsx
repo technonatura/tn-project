@@ -34,6 +34,7 @@ import theme from "theme/theme";
 import Stack from "@mui/material/Stack";
 
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Tooltip from "@mui/material/Tooltip";
 import NextLink from "next/link";
@@ -62,37 +63,6 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
   color: "white",
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: "white",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "white",
-  width: "100%",
-
-  "& .MuiInputBase-input": {
-    color: "white",
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "100%",
-      "&:focus": {
-        width: "100%",
-      },
-    },
-  },
 }));
 
 const blackListPages = ["/login"];
@@ -275,8 +245,10 @@ export default function ProminentAppBar() {
                             opacity: 1,
                           },
                         }}
-                        placeholder="Search Google Maps"
-                        inputProps={{ "aria-label": "search google maps" }}
+                        placeholder="Search TechnoNatura Student' Projects"
+                        inputProps={{
+                          "aria-label": "search technonatura students' Project",
+                        }}
                       />
                       <IconButton
                         type="submit"
@@ -339,45 +311,57 @@ export default function ProminentAppBar() {
                 >
                   <SearchIcon />
                 </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="display more actions"
-                  edge="end"
-                  color="inherit"
-                  onClick={handleClick}
-                >
-                  <MoreIcon />
-                </IconButton>
-                <Menu
-                  id="fade-menu"
-                  MenuListProps={{
-                    "aria-labelledby": "fade-button",
-                  }}
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  TransitionComponent={Fade}
-                >
-                  <NextLink href="/my">
-                    <MenuItem onClick={handleClose}>My Account</MenuItem>
-                  </NextLink>
-                  {authState.me ? (
+
+                {authState.me ? (
+                  <IconButton
+                    size="large"
+                    aria-label="display more actions"
+                    edge="end"
+                    color="inherit"
+                    onClick={handleClick}
+                  >
+                    <MoreIcon />
+                  </IconButton>
+                ) : (
+                  <Tooltip title="Login" arrow>
+                    <IconButton
+                      size="large"
+                      aria-label="display more actions"
+                      edge="end"
+                      color="inherit"
+                      onClick={() => router.push("/login")}
+                    >
+                      <LoginIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
+
+                {authState.me && (
+                  <Menu
+                    id="fade-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "fade-button",
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    TransitionComponent={Fade}
+                  >
                     <>
+                      <NextLink href="/my">
+                        <MenuItem onClick={handleClose}>My Account</MenuItem>
+                      </NextLink>
                       <Divider />
                       <NextLink href="/api/logout">
                         <MenuItem onClick={handleClose}>Logout</MenuItem>
                       </NextLink>
                     </>
-                  ) : (
-                    <NextLink href="/login">
-                      <MenuItem onClick={handleClose}>Login</MenuItem>
-                    </NextLink>
-                  )}
 
-                  {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+                    {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleClose}>Logout</MenuItem> */}
-                </Menu>
+                  </Menu>
+                )}
               </Toolbar>
             </AppBar>
           </Box>

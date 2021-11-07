@@ -34,7 +34,7 @@ const handler = (req: NextApiRequestWithFoo, res: NextApiResponse) => {
     })
   );
 
-  window.history.back();
+  res.redirect("/");
 };
 
 export default handler;
