@@ -7,11 +7,10 @@ import { Container, Typography, Divider, Link } from "@mui/material/";
 export default function LabelBottomNavigation() {
   const router = useRouter();
 
-  if (["/profile/[username]"].includes(router.pathname)) {
+  if (["/u/[username]", "/p/[projectName]"].includes(router.pathname)) {
     return (
       <Container
         sx={{
-          position: "fixed",
           left: 0,
           right: 0,
           bottom: 0,

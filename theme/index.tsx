@@ -119,7 +119,7 @@ export default function ThemeConfig({
           {/* @ts-ignore */}
           <MobileNav />
           <Footer />
-          <PostProjectButton />
+          {authState.me && <PostProjectButton />}
         </Container>
         {/* </MobileView> */}
       </ThemeProvider>

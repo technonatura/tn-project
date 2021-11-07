@@ -153,7 +153,7 @@ export default function LoginComponent({
             <TextField
               // eslint-disable-next-line react/no-array-index-key
               fullWidth
-              label="email"
+              label="Email"
               {...getFieldProps("email")}
               error={Boolean(
                 // @ts-ignore
